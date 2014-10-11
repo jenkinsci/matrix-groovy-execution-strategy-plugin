@@ -1,0 +1,7 @@
+.gradle/
+.idea/
+build/
+groovier-matrix-execution-strategy-plugin.iml
+work/
+target/
+.DS_Store
