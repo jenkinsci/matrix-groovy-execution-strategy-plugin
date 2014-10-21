@@ -12,7 +12,7 @@ import hudson.matrix.MatrixBuild.MatrixBuildExecution
  */
 class ScriptRunner {
 
-    final GroovyShell SHELL = new GroovyShell(Jenkins.instance.pluginManager.uberClassLoader)
+    final GroovyShell shell = new GroovyShell(Jenkins.instance.pluginManager.uberClassLoader)
     Script compiledScript
     String workspace
     MatrixBuild.MatrixBuildExecution execution
@@ -25,7 +25,7 @@ class ScriptRunner {
 
     ScriptRunner(MatrixBuild.MatrixBuildExecution execution, String script) {
         this(execution)
-        compiledScript = SHELL.parse(script)
+        compiledScript = shell.parse(script)
     }
 
     ScriptRunner(MatrixBuild.MatrixBuildExecution execution, File scriptFile) {
@@ -36,9 +36,10 @@ class ScriptRunner {
         } else {
             script = Util.loadFile( new File(workspace + File.separator + scriptFile.path) )
         }
-        compiledScript = SHELL.parse(script)
+        compiledScript = shell.parse(script)
     }
 
+    //@SuppressWarnings('InsecureRandom')
     Map run( List<Combination> c) {
 
         c.sort { Math.random() }
