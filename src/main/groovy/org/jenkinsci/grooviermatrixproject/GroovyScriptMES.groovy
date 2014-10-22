@@ -28,7 +28,14 @@ class GroovyScriptMES extends BaseMES {
     }
 
     Map decideOrder(MatrixBuild.MatrixBuildExecution execution, List<Combination> comb) {
-        def scriptRunner = new ScriptRunner(execution, scriptType == 'file' ? new File(scriptFile) : script)
+
+        def scriptRunner
+
+        if (scriptType == 'script') {
+            scriptRunner = new ScriptRunner(execution, new StringReader(script))
+        } else {
+            scriptRunner = new ScriptRunner(execution, new WorkspaceFileReader(scriptFile).scriptFile)
+        }
 
         def ret = scriptRunner.run(comb)
 
@@ -36,7 +43,7 @@ class GroovyScriptMES extends BaseMES {
     }
 
     @Extension
-    public static class DescriptorImpl extends MatrixExecutionStrategyDescriptor {
+    static class DescriptorImpl extends MatrixExecutionStrategyDescriptor {
         final String displayName = 'Groovy Script Matrix Executor Strategy'
     }
 

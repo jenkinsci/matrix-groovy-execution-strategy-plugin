@@ -1,6 +1,5 @@
 package org.jenkinsci.grooviermatrixproject
 
-import hudson.Util
 import jenkins.model.Jenkins
 import hudson.matrix.Combination
 import hudson.model.OneOffExecutor
@@ -17,29 +16,16 @@ class ScriptRunner {
     String workspace
     MatrixBuild.MatrixBuildExecution execution
 
-    ScriptRunner(MatrixBuild.MatrixBuildExecution execution) {
-        OneOffExecutor thr = Thread.currentThread()
-        this.workspace = thr.getCurrentWorkspace()
+    ScriptRunner(MatrixBuild.MatrixBuildExecution execution, Reader script) {
         this.execution = execution
+
+        OneOffExecutor thr = Thread.currentThread()
+        this.workspace = thr.currentWorkspace
+
+        this.compiledScript = shell.parse(script.text)
     }
 
-    ScriptRunner(MatrixBuild.MatrixBuildExecution execution, String script) {
-        this(execution)
-        compiledScript = shell.parse(script)
-    }
-
-    ScriptRunner(MatrixBuild.MatrixBuildExecution execution, File scriptFile) {
-        this(execution)
-        String script
-        if( scriptFile.isAbsolute() ) {
-            script = Util.loadFile(scriptFile)
-        } else {
-            script = Util.loadFile( new File(workspace + File.separator + scriptFile.path) )
-        }
-        compiledScript = shell.parse(script)
-    }
-
-    //@SuppressWarnings('InsecureRandom')
+    @SuppressWarnings('InsecureRandom')
     Map run( List<Combination> c) {
 
         c.sort { Math.random() }

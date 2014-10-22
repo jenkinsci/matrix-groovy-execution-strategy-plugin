@@ -5,12 +5,12 @@ import hudson.matrix.MatrixProject
 import hudson.matrix.TextAxis
 import spock.lang.Specification
 import org.junit.Rule
-import org.jvnet.hudson.test.JenkinsRule
+import org.jvnet.hudson.test.GroovyJenkinsRule
 
 class GroovyScriptMESSpec extends Specification {
 
     @Rule
-    JenkinsRule rule = new JenkinsRule()
+    GroovyJenkinsRule rule = new GroovyJenkinsRule()
 
     MatrixProject configure() {
 
