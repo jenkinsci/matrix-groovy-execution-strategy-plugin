@@ -14,11 +14,7 @@ class GroovyScriptMES extends BaseMES {
 
     String script
     String scriptFile
-    String scriptType='script'
-
-    GroovyScriptMES() {
-
-    }
+    String scriptType = 'script'
 
     @DataBoundConstructor
     GroovyScriptMES( String script, String scriptFile, String scriptType) {
@@ -30,9 +26,13 @@ class GroovyScriptMES extends BaseMES {
     Map decideOrder(MatrixBuild.MatrixBuildExecution execution, List<Combination> comb) {
 
         def scriptRunner
+        def defaultScript = """\
+            result['default'] = combinations
+            result
+        """
 
-        if (scriptType == 'script') {
-            scriptRunner = new ScriptRunner(execution, new StringReader(script))
+        if (scriptType == 'script' || scriptType == '') {
+            scriptRunner = new ScriptRunner(execution, new StringReader(script ?: defaultScript))
         } else {
             scriptRunner = new ScriptRunner(execution, new WorkspaceFileReader(scriptFile).scriptFile)
         }

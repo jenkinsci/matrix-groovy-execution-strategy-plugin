@@ -11,7 +11,7 @@ tags they use. Views are always organized according to its owner class,
 so it should be straightforward to find them.
 */
 namespace(lib.FormTagLib).with {
-    radioBlock(name: 'scriptType', title: 'Groovy Script', value: 'script', checked=instance.scriptType.equals('script'), inline: true) {
+    radioBlock(name: 'scriptType', title: 'Groovy Script', value: 'script', default: 'script', checked=instance.scriptType.equals('script'), inline: true) {
         entry(title: _("Groovy Script"), field: "script") {
             textarea()
         }

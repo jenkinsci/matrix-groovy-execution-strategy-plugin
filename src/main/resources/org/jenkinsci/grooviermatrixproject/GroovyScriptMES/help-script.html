@@ -1,0 +1,22 @@
+<div>
+    <p>A groovy script to decide the order of the combinations. There are several parameters available in the script</p>
+    <ul>
+        <li>combinations</li>
+            <p>This is a List of a String map of all the matrix combinations</p>
+            <p>For example, [{axis1: 'a', axis2: 'x'}, {axis1: 'b', axis2: 'y'...</p>
+        <li>workspace</li>
+            <p>a string of the workspace</p>
+        <li>jenkins which references Jenkins.instance</li>
+        <li>execution which is the OneOffExecutor running the setup for the matrix job</li>
+    </ul>
+    <p>A failure will stop the build on the next entry.</p>
+
+    <p>The return should be a TreeMap of combination lists. These will be executed in the natural order. Items in each section
+       will be executed in parallel and the separate map entries in sequence. Any combination not in the map will not be executed.</p>
+    <p>This is passed into the script as result and needs to be returned from the script</p>
+    <ul>
+        <li>result TreeMap&lt;String, List&lt;Combination&gt;&gt;</li>
+    </ul>
+
+    If no script is specified, all combinations will be run in parallel in one go.
+</div>
