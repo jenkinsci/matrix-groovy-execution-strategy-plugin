@@ -49,13 +49,13 @@ dependencies {
 
 group = 'org.jenkins-ci.plugins'
 version = '0.0.1-SNAPSHOT'
-description = 'Groovier Matrix Project Plugin'
+description = 'Matrix Groovy Execution Strategy Plugin'
 
 jenkinsPlugin {
     coreVersion = '1.585'
-    displayName = 'Groovier Matrix Project Plugin'
-    url = 'https://wiki.jenkins-ci.org/display/JENKINS/Groovier+Matrix+Project+Plugin'
-    gitHubUrl = 'https://github.com/jenkinsci/groovier-matrix-project-plugin'
+    displayName = 'Matrix Groovy Execution Strategy Plugin'
+    url = 'https://wiki.jenkins-ci.org/display/JENKINS/matrix+groovy+execution+strategy+plugin'
+    gitHubUrl = 'https://github.com/jenkinsci/matrix-groovy-execution-strategy-plugin'
     developers {
         developer {
             id 'jeremym'
