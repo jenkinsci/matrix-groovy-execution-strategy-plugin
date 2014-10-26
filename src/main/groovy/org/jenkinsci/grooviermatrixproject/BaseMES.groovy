@@ -20,6 +20,11 @@ import hudson.model.Queue
 import hudson.model.BuildListener
 import hudson.matrix.MatrixBuild.MatrixBuildExecution
 
+//seems like groovy wants the abstract class too
+@SuppressWarnings('UnusedImport')
+import hudson.tasks.test.TestResultAggregator
+//import hudson.tasks.test.AggregatedTestResultAction
+
 import javax.annotation.Nullable
 
 /**
@@ -42,6 +47,10 @@ abstract class BaseMES extends MatrixExecutionStrategy {
         Result r = Result.SUCCESS
 
         def multiCombs = decideOrder(execution, combs)
+
+        if (notifyStartBuild(execution.aggregators)) {
+            return Result.FAILURE
+        }
 
         multiCombs.any { k, v ->
 
@@ -143,24 +152,25 @@ abstract class BaseMES extends MatrixExecutionStrategy {
         run != null ? run.result : Result.ABORTED
     }
 
+    boolean notifyStartBuild(List<MatrixAggregator> aggregators) throws InterruptedException, IOException {
+        aggregators.each { a ->
+            if (!a.startBuild()) {
+                return true
+            }
+        }
+        false
+    }
+
     void notifyEndBuild(MatrixRun b, List<MatrixAggregator> aggregators) throws InterruptedException, IOException {
         if (b == null) {
             return // can happen if the configuration run gets cancelled before it gets started.
         }
 
-        for (MatrixAggregator a : aggregators) {
+        aggregators.each { a ->
             if (!a.endRun(b)) {
                 throw new AbortException()
             }
         }
     }
-
-    //@Extension
-    //public static class DescriptorImpl extends MatrixExecutionStrategyDescriptor {
-    //    @Override
-    //    public String getDisplayName() {
-    //        return 'Groovier Matrix Executor Strategy'
-    //    }
-    //}
 
 }
