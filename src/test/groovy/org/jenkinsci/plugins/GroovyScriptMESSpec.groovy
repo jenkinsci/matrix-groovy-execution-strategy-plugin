@@ -1,4 +1,4 @@
-package org.jenkinsci.grooviermatrixproject
+package org.jenkinsci.plugins
 
 import hudson.matrix.AxisList
 import hudson.matrix.MatrixProject

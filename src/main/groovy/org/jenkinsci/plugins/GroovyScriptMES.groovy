@@ -1,4 +1,4 @@
-package org.jenkinsci.grooviermatrixproject
+package org.jenkinsci.plugins
 
 import hudson.Extension
 import org.kohsuke.stapler.DataBoundConstructor
@@ -6,7 +6,6 @@ import hudson.matrix.Combination
 import hudson.matrix.MatrixBuild
 import hudson.matrix.MatrixBuild.MatrixBuildExecution
 import hudson.matrix.MatrixExecutionStrategyDescriptor
-
 /**
  * Created by jeremymarshall on 12/10/2014.
  */
@@ -46,5 +45,4 @@ class GroovyScriptMES extends BaseMES {
     static class DescriptorImpl extends MatrixExecutionStrategyDescriptor {
         final String displayName = 'Groovy Script Matrix Executor Strategy'
     }
-
 }

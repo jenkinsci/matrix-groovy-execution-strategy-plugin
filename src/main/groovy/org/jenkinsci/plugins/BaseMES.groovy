@@ -1,9 +1,7 @@
-package org.jenkinsci.grooviermatrixproject
+package org.jenkinsci.plugins
 
-import hudson.Extension
 import hudson.console.ModelHyperlinkNote
 import hudson.matrix.MatrixExecutionStrategy
-import hudson.matrix.MatrixExecutionStrategyDescriptor
 import hudson.matrix.MatrixConfiguration
 import hudson.matrix.MatrixBuild
 import hudson.matrix.MatrixRun
@@ -21,8 +19,6 @@ import hudson.model.BuildListener
 import hudson.matrix.MatrixBuild.MatrixBuildExecution
 
 //seems like groovy wants the abstract class too
-@SuppressWarnings('UnusedImport')
-import hudson.tasks.test.TestResultAggregator
 //import hudson.tasks.test.AggregatedTestResultAction
 
 import javax.annotation.Nullable

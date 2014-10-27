@@ -1,4 +1,4 @@
-package org.jenkinsci.grooviermatrixproject
+package org.jenkinsci.plugins
 
 import jenkins.model.Jenkins
 import hudson.matrix.Combination
