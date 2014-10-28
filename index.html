@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Matrix-groovy-execution-strategy-plugin by jenkinsci</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Matrix-groovy-execution-strategy-plugin</h1>
+        <p>Dynamically select Jenkins matrix combinations to use</p>
+
+        <p class="view"><a href="https://github.com/jenkinsci/matrix-groovy-execution-strategy-plugin">View the Project on GitHub <small>jenkinsci/matrix-groovy-execution-strategy-plugin</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/jenkinsci/matrix-groovy-execution-strategy-plugin/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jenkinsci/matrix-groovy-execution-strategy-plugin/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jenkinsci/matrix-groovy-execution-strategy-plugin">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="a-groovy-script-to-decide-the-order-of-matrix-project-combinations" class="anchor" href="#a-groovy-script-to-decide-the-order-of-matrix-project-combinations"><span class="octicon octicon-link"></span></a>A groovy script to decide the order of matrix project combinations</h1>
+
+<h2>
+<a name="bindings" class="anchor" href="#bindings"><span class="octicon octicon-link"></span></a>Bindings</h2>
+
+<p>There are several variables available in the script</p>
+
+<ul>
+<li>combinations</li>
+<li>workspace</li>
+<li>jenkins</li>
+<li>execution</li>
+<li>result</li>
+</ul>
+
+<h3>
+<a name="combinationss" class="anchor" href="#combinationss"><span class="octicon octicon-link"></span></a>Combinationss</h3>
+
+<p>This is a List of a String map of all the matrix combinations
+For example </p>
+
+<div class="highlight highlight-groovy"><pre><span class="o">[</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"a"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"x"</span> <span class="o">},</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"a"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"y"</span> <span class="o">},</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"a"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"z"</span> <span class="o">},</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"b"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"x"</span> <span class="o">},</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"b"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"y"</span> <span class="o">},</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"b"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"z"</span> <span class="o">}</span>
+<span class="o">]</span>
+</pre></div>
+
+<h3>
+<a name="workspace" class="anchor" href="#workspace"><span class="octicon octicon-link"></span></a>workspace</h3>
+
+<p>a string of the workspace</p>
+
+<h3>
+<a name="execution" class="anchor" href="#execution"><span class="octicon octicon-link"></span></a>execution</h3>
+
+<p>The is the <a href="http://javadoc.jenkins-ci.org/hudson/model/OneOffExecutor.html">OneOffExecutor</a> running the setup for the matrix job</p>
+
+<h3>
+<a name="result" class="anchor" href="#result"><span class="octicon octicon-link"></span></a>result</h3>
+
+<p>The script is expected to return a <a href="http://groovy.codehaus.org/JN1035-Maps">TreeMap</a>. This is passed in for use but does not have to be the one returned</p>
+
+<div class="highlight highlight-groovy"><pre><span class="o">{</span>
+  <span class="nl">x:</span> <span class="o">[</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"a"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"x"</span> <span class="o">},</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"b"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"x"</span> <span class="o">}</span>
+  <span class="o">],</span>
+  <span class="nl">y:</span> <span class="o">[</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"a"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"y"</span> <span class="o">},</span>
+    <span class="o">{</span> <span class="nl">axis1:</span> <span class="s2">"b"</span><span class="o">,</span> <span class="nl">axis2:</span> <span class="s2">"y"</span> <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>Notice that axis2: 'z' has not been returned, so these combinations will not be executed</p>
+
+<h2>
+<a name="execution-1" class="anchor" href="#execution-1"><span class="octicon octicon-link"></span></a>Execution</h2>
+
+<p>The entries in the TreeMap returned will be executed in sequence.</p>
+
+<p>That is to say, the first list will be executed in parallel, then the second, and so on</p>
+
+<p>A failure will stop the build on the next entry.</p>
+
+<p>If no script is specified, all combinations will be run in parallel in one go.</p>
+
+<h2>
+<a name="scripts" class="anchor" href="#scripts"><span class="octicon octicon-link"></span></a>Scripts</h2>
+
+<h3>
+<a name="loction" class="anchor" href="#loction"><span class="octicon octicon-link"></span></a>Loction</h3>
+
+<p>The script can be in three locations</p>
+
+<ul>
+<li>Added in directly</li>
+<li>An absolute path available to the node running the job setting up the matrix</li>
+<li>A relative path in the workspace</li>
+</ul>
+
+<h3>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h3>
+
+<p>How to transform the example above</p>
+
+<div class="highlight highlight-groovy"><pre><span class="n">combinations</span><span class="o">.</span><span class="na">each</span><span class="o">{</span>
+
+             <span class="k">if</span><span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">axis2</span> <span class="o">==</span> <span class="s1">'z'</span><span class="o">)</span>
+                   <span class="k">return</span>
+
+             <span class="n">result</span><span class="o">[</span><span class="n">it</span><span class="o">.</span><span class="na">axis2</span><span class="o">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">[</span><span class="n">it</span><span class="o">.</span><span class="na">axis2</span><span class="o">]</span> <span class="o">?:</span> <span class="o">[]</span>
+             <span class="n">result</span><span class="o">[</span><span class="n">it</span><span class="o">.</span><span class="na">axis2</span><span class="o">]</span> <span class="o">&lt;&lt;</span> <span class="n">it</span>
+<span class="o">}</span>
+
+<span class="n">result</span>
+</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jenkinsci">jenkinsci</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
