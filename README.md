@@ -1,6 +1,6 @@
 
 
-# A groovy script to decide the order of matrix project combinations
+# A plugin to decide the order of matrix project combinations
 
 ## Bindings
 There are several variables available in the script
@@ -11,7 +11,7 @@ There are several variables available in the script
 * execution
 * result
 
-### Combinationss
+### Combinations
 This is a List of a String map of all the matrix combinations
 For example 
 ```groovy
