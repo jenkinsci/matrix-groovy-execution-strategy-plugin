@@ -58,7 +58,7 @@ A failure will stop the build on the next entry.</p>
 If no script is specified, all combinations will be run in parallel in one go.
 
 ## Scripts
-### Loction
+### Location
 The script can be in three locations
 * Added in directly
 * An absolute path available to the node running the job setting up the matrix
