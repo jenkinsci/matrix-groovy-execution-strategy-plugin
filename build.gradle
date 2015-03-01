@@ -48,7 +48,7 @@ dependencies {
 }
 
 group = 'org.jenkins-ci.plugins'
-version = '1.0.0'
+version = '1.0.1-SNAPSHOT'
 description = 'Matrix Groovy Execution Strategy Plugin'
 
 jenkinsPlugin {
