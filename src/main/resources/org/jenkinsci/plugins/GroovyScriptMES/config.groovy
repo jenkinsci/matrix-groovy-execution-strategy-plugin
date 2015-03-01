@@ -14,7 +14,9 @@ so it should be straightforward to find them.
 namespace(lib.FormTagLib).with {
     radioBlock(name: 'scriptType', title: 'Groovy Script', value: 'script', checked=instance?instance.scriptType.equals('script'):true, inline: true) {
         entry(title: _("Groovy Script"), field: "script") {
-            textarea()
+            textarea( 'codemirror-mode': "groovy",
+                'codemirror-config': "mode: 'text/x-groovy', lineNumbers: true, matchBrackets: true")
+
         }
     }
     radioBlock(name: 'scriptType', title: 'Groovy File', value: 'file', checked=instance?.scriptType.equals('file'), inline: true) {
