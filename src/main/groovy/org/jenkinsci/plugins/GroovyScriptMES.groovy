@@ -6,6 +6,7 @@ import hudson.matrix.Combination
 import hudson.matrix.MatrixBuild
 import hudson.matrix.MatrixBuild.MatrixBuildExecution
 import hudson.matrix.MatrixExecutionStrategyDescriptor
+
 /**
  * Created by jeremymarshall on 12/10/2014.
  */
