@@ -6,6 +6,7 @@ import hudson.model.OneOffExecutor
 import hudson.matrix.MatrixBuild
 import hudson.matrix.MatrixBuild.MatrixBuildExecution
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript
+
 /**
  * Created by jeremymarshall on 10/10/2014.
  */
@@ -34,7 +35,7 @@ class ScriptRunner {
         binding.setVariable('execution', this.execution)
         binding.setVariable('result', new TreeMap<String, List<Combination>>())
 
-        def res = script.evaluate(getClass().getClassLoader(), binding);
+        def res = script.evaluate(getClass().classLoader, binding)
         res
     }
 }
