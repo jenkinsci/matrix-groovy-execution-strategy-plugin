@@ -49,7 +49,7 @@ class GroovyScriptMES extends BaseMES {
                 return result
             }
         } else if (! Jenkins.instance.getDescriptor(this.class).secureOnly) {
-            List<ClasspathEntry> cp = new ArrayList<ClasspathEntry>()
+            List<ClasspathEntry> cp = []
 
             def scriptInFile = new WorkspaceFileReader(scriptFile).scriptFile.text
             myScript = new SecureGroovyScript(scriptInFile, false, cp).configuring(ApprovalContext.create())
@@ -67,7 +67,7 @@ class GroovyScriptMES extends BaseMES {
     @SuppressWarnings('UnusedPrivateMethod')
     private Object readResolve() {
         if (script != null) {
-            List<ClasspathEntry> cp = new ArrayList<ClasspathEntry>()
+            List<ClasspathEntry> cp = []
 
             secureScript = new SecureGroovyScript(script, false, cp).configuring(ApprovalContext.create())
             script = null
