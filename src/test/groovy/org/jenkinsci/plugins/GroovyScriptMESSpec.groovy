@@ -6,6 +6,7 @@ import hudson.matrix.TextAxis
 import spock.lang.Specification
 import org.junit.Rule
 import org.jvnet.hudson.test.GroovyJenkinsRule
+import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript
 
 class GroovyScriptMESSpec extends Specification {
 
@@ -49,7 +50,7 @@ class GroovyScriptMESSpec extends Specification {
         """
 
         def matrixProject = configure()
-        matrixProject.executionStrategy = new GroovyScriptMES(script, '', 'script')
+        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript(script, false), '', 'script')
 
         when:
         def build = matrixProject.scheduleBuild2(0).get()
