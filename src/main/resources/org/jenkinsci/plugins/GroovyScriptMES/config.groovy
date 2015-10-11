@@ -12,17 +12,21 @@ tags they use. Views are always organized according to its owner class,
 so it should be straightforward to find them.
 */
 namespace(lib.FormTagLib).with {
-    radioBlock(name: 'scriptType', title: 'Groovy Script', value: 'script', checked=instance?instance.scriptType.equals('script'):true, inline: true) {
-        entry(title: _("Groovy Script"), field: "script") {
-            textarea( 'codemirror-mode': "groovy",
-                'codemirror-config': "mode: 'text/x-groovy', lineNumbers: true, matchBrackets: true")
 
+    if(descriptor.getSecureOnly()) {
+        property(field = 'secureScript')
+        invisibleEntry {
+            input( name: "scriptFile", value: "", type: "hidden")
+            input( name: "scriptType", value: "script", type: "hidden")
+        }
+    } else {
+        radioBlock(name: 'scriptType', title: 'Groovy Script', value: 'script', checked = instance ? instance.scriptType.equals('script') : true, inline: true) {
+            property(field = 'secureScript')
+        }
+        radioBlock(name: 'scriptType', title: 'Groovy File', value: 'file', checked = instance?.scriptType.equals('file'), inline: true) {
+            entry(title: _("Groovy File"), field: "scriptFile") {
+                textbox()
+            }
         }
     }
-    radioBlock(name: 'scriptType', title: 'Groovy File', value: 'file', checked=instance?.scriptType.equals('file'), inline: true) {
-        entry(title: _("Groovy File"), field: "scriptFile") {
-            textbox()
-        }
-    }
-
 }

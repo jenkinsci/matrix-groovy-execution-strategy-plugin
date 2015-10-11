@@ -6,6 +6,7 @@ import hudson.matrix.MatrixConfiguration
 import hudson.matrix.MatrixBuild
 import hudson.matrix.MatrixRun
 import hudson.matrix.MatrixAggregator
+import hudson.matrix.listeners.MatrixBuildListener
 import hudson.model.Action
 import hudson.model.Cause
 import hudson.model.ParametersAction
@@ -34,10 +35,15 @@ abstract class BaseMES extends MatrixExecutionStrategy {
         //final Collection<MatrixConfiguration> configurations = new HashSet<MatrixConfiguration>()
         List<Combination> combs = []
         Map<Combination, MatrixConfiguration> mc = [:]
+
         execution.activeConfigurations.each {
             def c = it.combination
-            combs << c
-            mc[c] = it
+
+            //only add it if the build listeners say so
+            if (MatrixBuildListener.buildConfiguration(execution.build, it)) {
+                combs << c
+                mc[c] = it
+            }
         }
 
         Result r = Result.SUCCESS

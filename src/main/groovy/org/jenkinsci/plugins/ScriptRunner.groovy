@@ -5,24 +5,22 @@ import hudson.matrix.Combination
 import hudson.model.OneOffExecutor
 import hudson.matrix.MatrixBuild
 import hudson.matrix.MatrixBuild.MatrixBuildExecution
+import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript
 
 /**
  * Created by jeremymarshall on 10/10/2014.
  */
 class ScriptRunner {
 
-    final GroovyShell shell = new GroovyShell(Jenkins.instance.pluginManager.uberClassLoader)
-    Script compiledScript
     String workspace
     MatrixBuild.MatrixBuildExecution execution
+    SecureGroovyScript script
 
-    ScriptRunner(MatrixBuild.MatrixBuildExecution execution, Reader script) {
+    ScriptRunner(MatrixBuild.MatrixBuildExecution execution, SecureGroovyScript script) {
         this.execution = execution
-
+        this.script = script
         OneOffExecutor thr = Thread.currentThread()
         this.workspace = thr.currentWorkspace
-
-        this.compiledScript = shell.parse(script.text)
     }
 
     @SuppressWarnings('InsecureRandom')
@@ -37,9 +35,7 @@ class ScriptRunner {
         binding.setVariable('execution', this.execution)
         binding.setVariable('result', new TreeMap<String, List<Combination>>())
 
-        compiledScript.setBinding(binding)
-
-        def res = compiledScript.run()
+        def res = script.evaluate(getClass().classLoader, binding)
         res
     }
 }
