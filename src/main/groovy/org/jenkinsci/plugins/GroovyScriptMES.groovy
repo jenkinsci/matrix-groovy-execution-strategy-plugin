@@ -13,7 +13,7 @@ import org.jenkinsci.plugins.scriptsecurity.scripts.ApprovalContext
 import org.jenkinsci.plugins.scriptsecurity.scripts.ClasspathEntry
 import net.sf.json.JSONObject
 import org.kohsuke.stapler.StaplerRequest
-import hudson.util.FormValidation
+
 /**
  * Created by jeremymarshall on 12/10/2014.
  */
@@ -21,6 +21,7 @@ class GroovyScriptMES extends BaseMES {
 
     SecureGroovyScript secureScript
 
+    @SuppressWarnings('UnnecessaryTransientModifier')
     transient String script
     String scriptFile
     String scriptType = 'script'
@@ -40,21 +41,21 @@ class GroovyScriptMES extends BaseMES {
         SecureGroovyScript myScript
 
         if (scriptType == 'script' || scriptType == '') {
-            if(secureScript.script != "") {
+            if (secureScript.script != '') {
                 myScript = secureScript
             } else {
                 def result = [:]
                 result['default'] = comb
                 return result
             }
-        } else if(! Jenkins.instance.getDescriptor(this.class).secureOnly) {
+        } else if (! Jenkins.instance.getDescriptor(this.class).secureOnly) {
             List<ClasspathEntry> cp = new ArrayList<ClasspathEntry>()
 
             def scriptInFile = new WorkspaceFileReader(scriptFile).scriptFile.text
-            myScript = new SecureGroovyScript(scriptInFile, false, cp).configuring(ApprovalContext.create());
+            myScript = new SecureGroovyScript(scriptInFile, false, cp).configuring(ApprovalContext.create())
             myScript.configuringWithKeyItem()
         } else {
-            throw new Exception("File based matrix groovy execution script not allowed")
+            throw new GroovyScriptInFileException('')
         }
 
         scriptRunner = new ScriptRunner(execution, myScript)
@@ -63,16 +64,16 @@ class GroovyScriptMES extends BaseMES {
         ret
     }
 
+    @SuppressWarnings('UnusedPrivateMethod')
     private Object readResolve() {
         if (script != null) {
-            List<ClasspathEntry> cp = new ArrayList<ClasspathEntry>();
+            List<ClasspathEntry> cp = new ArrayList<ClasspathEntry>()
 
-            secureScript = new SecureGroovyScript(script, false, cp).configuring(ApprovalContext.create());
-            script = null;
+            secureScript = new SecureGroovyScript(script, false, cp).configuring(ApprovalContext.create())
+            script = null
         }
-        return this;
+        this
     }
-
 
     @Extension
     static class DescriptorImpl extends MatrixExecutionStrategyDescriptor {
@@ -80,12 +81,12 @@ class GroovyScriptMES extends BaseMES {
 
         boolean secureOnly = false
 
-        public DescriptorImpl(){
+        DescriptorImpl() {
             load()
         }
 
         @Override
-        public boolean configure(StaplerRequest req, JSONObject formData) throws Descriptor.FormException {
+        boolean configure(StaplerRequest req, JSONObject formData) throws Descriptor.FormException {
             // To persist global configuration information,
             // set that to properties and call save().
             req.bindJSON(this, formData)
