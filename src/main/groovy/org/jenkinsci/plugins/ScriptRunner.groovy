@@ -26,7 +26,7 @@ class ScriptRunner {
     @SuppressWarnings('InsecureRandom')
     Map run( List<Combination> c) {
 
-        c.sort { Math.random() }
+        java.util.Collections.shuffle(c)
 
         Binding binding = new Binding()
         binding.setVariable('jenkins', Jenkins.instance)
