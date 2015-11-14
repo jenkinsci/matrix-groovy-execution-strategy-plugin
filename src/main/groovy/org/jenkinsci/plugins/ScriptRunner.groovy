@@ -23,10 +23,9 @@ class ScriptRunner {
         this.workspace = thr.currentWorkspace
     }
 
-    @SuppressWarnings('InsecureRandom')
     Map run( List<Combination> c) {
 
-        java.util.Collections.shuffle(c)
+        Collections.shuffle(c)
 
         Binding binding = new Binding()
         binding.setVariable('jenkins', Jenkins.instance)
