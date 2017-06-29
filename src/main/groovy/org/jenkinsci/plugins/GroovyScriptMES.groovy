@@ -35,7 +35,7 @@ class GroovyScriptMES extends BaseMES {
         this.secureScript.configuringWithKeyItem()
     }
 
-    Map decideOrder(MatrixBuild.MatrixBuildExecution execution, List<Combination> comb) {
+    @Override def decideOrder(MatrixBuild.MatrixBuildExecution execution, List<Combination> comb) {
 
         ScriptRunner scriptRunner
         SecureGroovyScript myScript

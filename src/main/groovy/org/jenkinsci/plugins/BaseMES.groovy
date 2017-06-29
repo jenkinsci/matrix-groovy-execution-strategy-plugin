@@ -48,7 +48,17 @@ abstract class BaseMES extends MatrixExecutionStrategy {
 
         Result r = Result.SUCCESS
 
-        def multiCombs = decideOrder(execution, combs)
+        def tuple = decideOrder(execution, combs)
+        Map multiCombs
+        Boolean carryOn
+
+        if (tuple instanceof List) {
+            multiCombs = tuple.get(0)
+            carryOn = tuple.get(1)
+        } else {
+            multiCombs = tuple
+            carryOn = false
+        }
 
         if (notifyStartBuild(execution.aggregators)) {
             return Result.FAILURE
@@ -75,7 +85,7 @@ abstract class BaseMES extends MatrixExecutionStrategy {
             }
 
             //choke if we have a failure
-            r == Result.FAILURE
+            (r == Result.FAILURE && carryOn == false )
         }
         r
     }
@@ -83,7 +93,7 @@ abstract class BaseMES extends MatrixExecutionStrategy {
     //override this and return a list of list of combinations
     //and the builds will be run each inner list in parallel then do the next list
     //and if anything fails it stops
-    abstract Map decideOrder(MatrixBuild.MatrixBuildExecution execution, List<Combination> comb)
+    abstract decideOrder(MatrixBuild.MatrixBuildExecution execution, List<Combination> comb)
 
     void scheduleConfigurationBuild(MatrixBuildExecution exec, MatrixConfiguration c) {
         MatrixBuild build = exec.build
