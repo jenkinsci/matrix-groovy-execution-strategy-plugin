@@ -25,7 +25,7 @@ class ScriptRunner {
         this.workspace = thr.currentWorkspace
     }
 
-    Map run( List<Combination> c) {
+    def run( List<Combination> c) {
 
         Collections.shuffle(c)
 
@@ -41,11 +41,11 @@ class ScriptRunner {
         def build = this.execution.build
         def resolver = build.buildVariableResolver
 
-        def p = build?.actions.find{ it instanceof ParametersAction }?.parameters
+        def p = build?.actions.find { it instanceof ParametersAction }?.parameters
         p.each {
-            def param_value = resolver.resolve(it.name)
+            def paramValue = resolver.resolve(it.name)
 
-            parameters[it.name] = param_value.value
+            parameters[it.name] = paramValue.value
         }
         binding.setVariable('parameters', parameters)
 

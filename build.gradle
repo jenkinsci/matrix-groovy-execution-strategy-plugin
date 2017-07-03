@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     jenkinsPlugins 'org.jenkins-ci.plugins:matrix-project:1.6@jar',
-                   'org.jenkins-ci.plugins:script-security:1.15@jar'
+                   'org.jenkins-ci.plugins:script-security:1.29@jar'
     optionalJenkinsPlugins 'org.jenkins-ci.plugins:envinject:1.23@jar'
     compile        'org.jenkins-ci.lib:envinject-lib:1.23@jar'
     testCompile    'org.spockframework:spock-core:0.6-groovy-1.8'
@@ -51,7 +51,7 @@ dependencies {
 }
 
 group = 'org.jenkins-ci.plugins'
-version = '1.0.4'
+version = '1.0.5'
 description = 'Matrix Groovy Execution Strategy Plugin'
 
 jenkinsPlugin {
