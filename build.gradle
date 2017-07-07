@@ -1,61 +1,11 @@
-buildscript {
-    repositories {
-        maven {
-            name "jenkins"
-            delegate.url("http://repo.jenkins-ci.org/releases/")
-        }
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.jenkins-ci.tools:gradle-jpi-plugin:0.7.2'
-        classpath 'net.saliman:gradle-cobertura-plugin:2.0.0'
-    }
+
+plugins {
+  id 'org.jenkins-ci.jpi' version '0.22.0'
+  id 'net.saliman.cobertura' version '2.5.0'
 }
-
-
-apply plugin: 'jpi'
-apply plugin: 'idea'
-apply plugin: 'cobertura'
-apply plugin: 'codenarc'
-
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
-
-codenarc {
-    toolVersion = '0.21'
-    configFile = file('config/codenarc/rules.groovy')
-}
-
-codenarcTest {
-    configFile = file('config/codenarc/rules-test.groovy')
-}
-
-cobertura{
-  coverageSourceDirs = [project.sourceSets.main.groovy.srcDirs]
-  coverageIgnoreTrivial = true
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    jenkinsPlugins 'org.jenkins-ci.plugins:matrix-project:1.6@jar',
-                   'org.jenkins-ci.plugins:script-security:1.29@jar'
-    optionalJenkinsPlugins 'org.jenkins-ci.plugins:envinject:1.23@jar'
-    compile        'org.jenkins-ci.lib:envinject-lib:1.23@jar'
-    testCompile    'org.spockframework:spock-core:0.6-groovy-1.8'
-    jenkinsTest    'org.jenkins-ci.plugins:ant:1.1@jar',
-                   'org.jenkins-ci.plugins:javadoc:1.0@jar',
-                   'org.jenkins-ci.plugins:junit:1.1@jar'
-}
-
-group = 'org.jenkins-ci.plugins'
-version = '1.0.5'
-description = 'Matrix Groovy Execution Strategy Plugin'
 
 jenkinsPlugin {
-    coreVersion = '1.609'
+    coreVersion = '2.60.1'
     displayName = 'Matrix Groovy Execution Strategy Plugin'
     url = 'https://wiki.jenkins-ci.org/display/JENKINS/matrix+groovy+execution+strategy+plugin'
     gitHubUrl = 'https://github.com/jenkinsci/matrix-groovy-execution-strategy-plugin'
@@ -68,6 +18,33 @@ jenkinsPlugin {
     }
 }
 
+cobertura{
+  coverageSourceDirs = [project.sourceSets.main.groovy.srcDirs]
+  coverageIgnoreTrivial = true
+}
+
+dependencies {
+    jenkinsPlugins 'org.jenkins-ci.plugins:matrix-project:1.11@jar',
+                   'org.jenkins-ci.plugins:script-security:1.26@jar'
+    optionalJenkinsPlugins 'org.jenkins-ci.plugins:envinject:2.1.3@jar'
+    compile        'org.hudsonci.lib:envinject-lib:1.12-h-1'
+    testCompile    'org.spockframework:spock-core:1.0-groovy-2.4',
+                   'org.jenkins-ci.main:jenkins-test-harness:2.7'
+    jenkinsTest    'org.jenkins-ci.plugins:ant:1.5@jar',
+                   'org.jenkins-ci.plugins:javadoc:1.4@jar',
+                   'org.jenkins-ci.plugins:junit:1.20@jar',
+                   //'org.jenkins-ci.plugins:mailer:1.2@jar',
+                   //'org.jenkins-ci.modules:instance-identity:2.1@jar',
+                   //'org.jenkins-ci.main:maven-plugin:2.16@jar',
+                   'org.jenkins-ci.plugins:matrix-project:1.11@jar',
+                   'org.jenkins-ci.main:jenkins-test-harness:1.609.1@jar'
+                   //'org.jenkins-ci.main:jenkins-test-harness-tools:2.2@jar'
+}
+
+group = 'org.jenkins-ci.plugins'
+version = '1.0.6-SNAPSHOT'
+description = 'Matrix Groovy Execution Strategy Plugin'
+
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.8'
+    gradleVersion = '3.2.1'
 }

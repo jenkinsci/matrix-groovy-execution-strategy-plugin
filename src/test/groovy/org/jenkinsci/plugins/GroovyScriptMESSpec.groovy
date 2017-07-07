@@ -6,19 +6,23 @@ import hudson.matrix.MatrixProject
 import hudson.matrix.TextAxis
 import hudson.model.AbstractBuild
 import hudson.model.BuildListener
+import org.junit.ClassRule
+import org.jvnet.hudson.test.JenkinsRule
 import org.jvnet.hudson.test.TestBuilder
+import spock.lang.Shared
 import spock.lang.Specification
 import org.junit.Rule
-import org.jvnet.hudson.test.GroovyJenkinsRule
+
 import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript
 
 class GroovyScriptMESSpec extends Specification {
 
-    @Rule
-    GroovyJenkinsRule rule = new GroovyJenkinsRule()
+//    @Shared
+//    @ClassRule
+//    JenkinsRule rule = new JenkinsRule()
 
     MatrixProject configure(Boolean failAX=false) {
-
+        JenkinsRule rule = new JenkinsRule()
         def matrixProject = rule.createMatrixProject()
 
         def axis = new TextAxis('axis1', ['a', 'b', 'c'])
