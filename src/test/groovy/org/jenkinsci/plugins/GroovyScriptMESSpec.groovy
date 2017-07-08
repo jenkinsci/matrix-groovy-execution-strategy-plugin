@@ -17,13 +17,13 @@ import org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript
 
 class GroovyScriptMESSpec extends Specification {
 
-//    @Shared
-//    @ClassRule
-//    JenkinsRule rule = new JenkinsRule()
+    //@Shared
+    //@ClassRule
+    @Rule
+    JenkinsRule rule = new JenkinsRule()
 
     MatrixProject configure(Boolean failAX=false) {
-        JenkinsRule rule = new JenkinsRule()
-        def matrixProject = rule.createMatrixProject()
+        def matrixProject = rule.jenkins.createProject(MatrixProject, 'test1');
 
         def axis = new TextAxis('axis1', ['a', 'b', 'c'])
         def axis2 = new TextAxis('axis2', ['x', 'y', 'z'])
