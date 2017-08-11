@@ -37,7 +37,7 @@ dependencies {
 }
 
 group = 'org.jenkins-ci.plugins'
-version = '1.0.6'
+version = '1.0.7'
 description = 'Matrix Groovy Execution Strategy Plugin'
 
 task wrapper(type: Wrapper) {
