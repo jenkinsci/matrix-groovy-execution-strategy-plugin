@@ -20,7 +20,7 @@ class WorkspaceFileReader {
         File f = new File(file)
 
         if (f.isAbsolute()) {
-            scriptFile = new FileReader(scriptFile)
+            scriptFile = new FileReader(file)
         } else {
             scriptFile = new FileReader(workspace + File.separator + file)
         }
