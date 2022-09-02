@@ -51,7 +51,7 @@ class GroovyScriptMES extends BaseMES {
         } else if (! Jenkins.instance.getDescriptor(this.class).secureOnly) {
             List<ClasspathEntry> cp = []
 
-            def scriptInFile = new WorkspaceFileReader(scriptFile).scriptFile.text
+            def scriptInFile = new WorkspaceFileReader(scriptFile).scriptContent
             myScript = new SecureGroovyScript(scriptInFile, false, cp).configuring(ApprovalContext.create())
             myScript.configuringWithKeyItem()
         } else {
