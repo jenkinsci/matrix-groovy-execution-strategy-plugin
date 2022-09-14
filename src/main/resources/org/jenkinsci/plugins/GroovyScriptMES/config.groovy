@@ -18,6 +18,7 @@ namespace(lib.FormTagLib).with {
         invisibleEntry {
             input( name: "scriptFile", value: "", type: "hidden")
             input( name: "scriptType", value: "script", type: "hidden")
+            input( name: "sandbox", value: false, type: "hidden")
         }
     } else {
         radioBlock(name: 'scriptType', title: 'Groovy Script', value: 'script', checked = instance ? instance.scriptType.equals('script') : true, inline: true) {
@@ -26,6 +27,9 @@ namespace(lib.FormTagLib).with {
         radioBlock(name: 'scriptType', title: 'Groovy File', value: 'file', checked = instance?.scriptType.equals('file'), inline: true) {
             entry(title: _("Groovy File"), field: "scriptFile") {
                 textbox()
+            }
+            entry(title: _("Use Groovy Sandbox"), field: "sandbox") {
+                checkbox()
             }
         }
     }

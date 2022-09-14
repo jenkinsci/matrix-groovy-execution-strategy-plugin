@@ -82,7 +82,7 @@ class GroovyScriptMESSpec extends Specification {
         given:
 
         def matrixProject = configure()
-        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript(script, false), '', 'script')
+        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript(script, false), '', 'script', false)
 
         when:
         def build = matrixProject.scheduleBuild2(0).get()
@@ -99,7 +99,7 @@ class GroovyScriptMESSpec extends Specification {
         given:
 
         def matrixProject = configure()
-        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript('', false), '', 'script')
+        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript('', false), '', 'script', false)
 
         when:
         def build = matrixProject.scheduleBuild2(0).get()
@@ -116,7 +116,7 @@ class GroovyScriptMESSpec extends Specification {
         given:
 
         def matrixProject = configure(true)
-        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript(script, false), '', 'script')
+        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript(script, false), '', 'script', false)
 
         when:
         def build = matrixProject.scheduleBuild2(0).get()
@@ -134,7 +134,7 @@ class GroovyScriptMESSpec extends Specification {
         given:
 
         def matrixProject = configure(true)
-        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript(scriptCont, false), '', 'script')
+        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript(scriptCont, false), '', 'script', false)
 
         when:
         def build = matrixProject.scheduleBuild2(0).get()
@@ -152,7 +152,7 @@ class GroovyScriptMESSpec extends Specification {
         given:
 
         def matrixProject = configure(true)
-        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript('', false), '', 'script')
+        matrixProject.executionStrategy = new GroovyScriptMES(new SecureGroovyScript('', false), '', 'script', false)
 
         when:
         def build = matrixProject.scheduleBuild2(0).get()
