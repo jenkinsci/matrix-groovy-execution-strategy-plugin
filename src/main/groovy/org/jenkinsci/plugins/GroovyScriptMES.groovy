@@ -25,12 +25,14 @@ class GroovyScriptMES extends BaseMES {
     transient String script
     String scriptFile
     String scriptType = 'script'
+    boolean sandbox = false
 
     @DataBoundConstructor
-    GroovyScriptMES( SecureGroovyScript secureScript, String scriptFile, String scriptType) {
+    GroovyScriptMES( SecureGroovyScript secureScript, String scriptFile, String scriptType, boolean sandbox) {
         this.secureScript = secureScript
         this.scriptFile = scriptFile
         this.scriptType = scriptType
+        this.sandbox = sandbox
 
         this.secureScript.configuringWithKeyItem()
     }
@@ -52,7 +54,7 @@ class GroovyScriptMES extends BaseMES {
             List<ClasspathEntry> cp = []
 
             def scriptInFile = new WorkspaceFileReader(scriptFile).scriptContent
-            myScript = new SecureGroovyScript(scriptInFile, false, cp).configuring(ApprovalContext.create())
+            myScript = new SecureGroovyScript(scriptInFile, this.sandbox, cp).configuring(ApprovalContext.create())
             myScript.configuringWithKeyItem()
         } else {
             throw new GroovyScriptInFileException('')
@@ -69,7 +71,7 @@ class GroovyScriptMES extends BaseMES {
         if (script != null) {
             List<ClasspathEntry> cp = []
 
-            secureScript = new SecureGroovyScript(script, false, cp).configuring(ApprovalContext.create())
+            secureScript = new SecureGroovyScript(script, this.sandbox, cp).configuring(ApprovalContext.create())
             script = null
         }
         this
